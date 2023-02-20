@@ -34,3 +34,29 @@ def post_data(request):
         new_item.save()
         # print(request.POST['message_data'])
         return HttpResponse()
+
+@csrf_exempt
+def edit_data(request):
+    if (request.method == 'POST'):
+        pkSelek = json.loads(request.body)
+        print(pkSelek)
+        a = pkSelek["pk"]
+
+        # pkSelek = int(pkSelek)
+        # allData = Message.objects.all()
+        # print(type(pkSelek))
+        
+        # all_data 
+
+        # for i in Message.objects.all():
+        #     print(i)
+        #     if i == "Message objects (" + str(pkSelek) + ")":
+        #         print("yey")
+        #     else :
+        #         print("brah")    
+
+        a1 = Message.objects.get(pk=a)
+        print(a1.message_data)
+        print(a1.date)
+        a1.message_data = 
+        return HttpResponse()

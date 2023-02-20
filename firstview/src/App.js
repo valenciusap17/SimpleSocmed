@@ -11,6 +11,7 @@ import "./index.css";
 // import {AppRegistry} from 'react-native';
 // import {NavigationContainer} from '@react-navigation/native';
 import moment from "moment";
+import Timelinecard from "./components/Timelinecard";
 
 async function fetchAllData() {
   return await axios.get("http://127.0.0.1:8000/json/");
@@ -33,13 +34,14 @@ export default function Home() {
   });
   const [message, setMessage] = useState();
   const [date, setDate] = useState();
+  const [pk, setPk] = useState();
   const [showData, setShowData] = useState("");
   const urlDataPost = "http://127.0.0.1:8000/post_json/";
 
-  const handleButton = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    setShowData("Nyoba ngab " + message + " " + date);
+    // setShowData("Nyoba ngab " + message + " " + date);
     Axios.post(urlDataPost, {
       message_data: message,
       date: date,
@@ -49,7 +51,7 @@ export default function Home() {
     // setMessage("");
   };
 
-  // console.log(data);
+  console.log(!isLoading && data.data);
   // console.log(isLoading);
 
   return (
@@ -57,41 +59,52 @@ export default function Home() {
       <div>
         <title>Fetching manja kawan</title>
 
-        <main>
-          <h1>Post from API</h1>
-          {isLoading ? (
-            <h1> Loading bro</h1>
-          ) : data ? (
-            <p>
-              {data.data.map((everyData) => (
-                <p>{everyData.fields.message_data}</p>
-              ))}
-            </p>
-          ) : (
-            <h1> Belom ada brodie uwu</h1>
-          )}
-        </main>
+        {isLoading ? (
+          <h1> Loading bro</h1>
+        ) : data ? (
+          <div flex flex-col>
+            {data.data.map((everyData) => (
+              <Timelinecard
+                message={everyData.fields.message_data}
+                date={everyData.fields.date}
+                pk={everyData.pk}
+                refetch={refetch}
+              />
+            ))}
+          </div>
+        ) : (
+          <h1> Belom ada brodie uwu</h1>
+        )}
       </div>
-      <div>
-        <form onSubmit={handleButton}>
-          <input
-            type="text"
-            id="message"
-            name="message"
-            value={message}
-            placeholder="Message"
-            onChange={(event) =>
-              setMessage(event.target.value) +
-              setDate(moment().format("YYYY-MM-DD"))
-            }
-          />
+      <br></br>
+      <div className="flex justify-center">
+        <form onSubmit={handleSubmit} class="w-full max-w-sm">
+          <div class="flex items-center border-b border-teal-500 py-2">
+            <input
+              class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              type="text"
+              id="message"
+              name="message"
+              value={message}
+              placeholder="Type Your Tweet Here Pal ^-^"
+              onChange={(event) =>
+                setMessage(event.target.value) +
+                setDate(moment().format("YYYY-MM-DD"))
+              }
+            />
 
-          <br />
-          <br />
-
-          {showData}
+            <br />
+            <button
+              class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+              type="submit"
+            >
+              Submit
+            </button>
+            <br />
+          </div>
         </form>
       </div>
+      {/* <div>{showData}</div> */}
     </>
   );
 }
