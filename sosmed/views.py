@@ -27,10 +27,9 @@ def post_data(request):
         body = json.loads(request.body)
         print(body.get("message_data"))
         message_data = body.get("message_data")
-        date_data = body.get("date")
         
 
-        new_item = Message(date=date_data, message_data=message_data)
+        new_item = Message(message_data=message_data)
         new_item.save()
         # print(request.POST['message_data'])
         return HttpResponse()
@@ -38,25 +37,39 @@ def post_data(request):
 @csrf_exempt
 def edit_data(request):
     if (request.method == 'POST'):
-        pkSelek = json.loads(request.body)
-        print(pkSelek)
-        a = pkSelek["pk"]
+        selectedData = json.loads(request.body)
+        print(selectedData)
+        a = selectedData["pk"]
 
-        # pkSelek = int(pkSelek)
+        # selectedData = int(selectedData)
         # allData = Message.objects.all()
-        # print(type(pkSelek))
+        # print(type(selectedData))
         
         # all_data 
 
         # for i in Message.objects.all():
         #     print(i)
-        #     if i == "Message objects (" + str(pkSelek) + ")":
+        #     if i == "Message objects (" + str(selectedData) + ")":
         #         print("yey")
         #     else :
         #         print("brah")    
 
         a1 = Message.objects.get(pk=a)
         print(a1.message_data)
-        print(a1.date)
-        a1.message_data = 
+        # print(a1.date)
+        print("batas ngab")
+        print(selectedData["message"])
+        # print(selectedData["date"])
+        a1.message_data = selectedData["message"]
+        a1.save()
+        return HttpResponse()
+    
+@csrf_exempt
+def delete_data(request):
+    if (request.method == 'POST'):
+        selectedData = json.loads(request.body)
+
+        baseData = Message.objects.get(pk=selectedData["pk"])
+
+        baseData.delete()
         return HttpResponse()

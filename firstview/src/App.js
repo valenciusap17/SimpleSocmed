@@ -33,19 +33,19 @@ export default function Home() {
     manual: true,
   });
   const [message, setMessage] = useState();
-  const [date, setDate] = useState();
-  const [pk, setPk] = useState();
-  const [showData, setShowData] = useState("");
+  // const [date, setDate] = useState();
   const urlDataPost = "http://127.0.0.1:8000/post_json/";
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     // setShowData("Nyoba ngab " + message + " " + date);
+
     Axios.post(urlDataPost, {
       message_data: message,
-      date: date,
-    }).then(refetch);
+    })
+      .then(refetch)
+      .then(() => setMessage(""));
     // setDate();
     // // console.log(dateUse);
     // setMessage("");
@@ -56,53 +56,57 @@ export default function Home() {
 
   return (
     <>
-      <div>
-        <title>Fetching manja kawan</title>
-
-        {isLoading ? (
-          <h1> Loading bro</h1>
-        ) : data ? (
-          <div flex flex-col>
-            {data.data.map((everyData) => (
-              <Timelinecard
-                message={everyData.fields.message_data}
-                date={everyData.fields.date}
-                pk={everyData.pk}
-                refetch={refetch}
+    <br></br>
+      <div class="flex flex-col space-y-20 mt-10">
+        <div className="flex justify-center">
+          <form onSubmit={handleSubmit} class="w-full max-w-sm">
+            <div class="flex items-center border-b border-teal-500 py-2">
+              <input
+                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                type="text"
+                id="message"
+                name="message"
+                value={message}
+                placeholder="Type Your Tweet Here Pal ^-^"
+                onChange={
+                  (event) => setMessage(event.target.value)
+                  // setDate(moment().format("YYYY-MM-DD"))
+                }
               />
-            ))}
-          </div>
-        ) : (
-          <h1> Belom ada brodie uwu</h1>
-        )}
-      </div>
-      <br></br>
-      <div className="flex justify-center">
-        <form onSubmit={handleSubmit} class="w-full max-w-sm">
-          <div class="flex items-center border-b border-teal-500 py-2">
-            <input
-              class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-              type="text"
-              id="message"
-              name="message"
-              value={message}
-              placeholder="Type Your Tweet Here Pal ^-^"
-              onChange={(event) =>
-                setMessage(event.target.value) +
-                setDate(moment().format("YYYY-MM-DD"))
-              }
-            />
 
-            <br />
-            <button
-              class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-              type="submit"
-            >
-              Submit
-            </button>
-            <br />
-          </div>
-        </form>
+              <br />
+              <button
+                class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+                type="submit"
+              >
+                Submit
+              </button>
+              <br />
+            </div>
+          </form>
+        </div>
+        <div>
+          <title>Fetching manja kawan</title>
+
+          {isLoading ? (
+            <h1> Loading bro</h1>
+          ) : data ? (
+            <div flex flex-col>
+              {data.data.map((everyData) => (
+                <Timelinecard
+                  message={everyData.fields.message_data}
+                  create_date={everyData.fields.create_date}
+                  edit_date={everyData.fields.edit_date}
+                  pk={everyData.pk}
+                  refetch={refetch}
+                />
+              ))}
+            </div>
+          ) : (
+            <h1> Belom ada brodie uwu</h1>
+          )}
+        </div>
+        <br></br>
       </div>
       {/* <div>{showData}</div> */}
     </>
