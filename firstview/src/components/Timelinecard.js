@@ -1,7 +1,6 @@
 import React from "react";
 
 import Axios from "axios";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
@@ -13,11 +12,8 @@ export default function Timelinecard({
   pk,
   refetch,
 }) {
-  //   const urlDataCancel = "http://127.0.0.1:8000/edit_json/";
   const [new_message, setMessage] = useState();
-  // const [new_date, setDate] = useState();
   const [show, setShow] = useState(false);
-  // const differenceDate = create_date - edit_date;
 
   const postEdit = (event) => {
     const urlEditData = "http://127.0.0.1:8000/edit_json/";

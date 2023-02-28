@@ -2,15 +2,12 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from . models import *
 from rest_framework.response import Response
-from . serializer import *
 from django.http import HttpResponse
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 import json
 from datetime import datetime
 
-
-# Create your views here.
         
 def index(request):
     return render(request, 'index.html')
@@ -31,7 +28,6 @@ def post_data(request):
 
         new_item = Message(message_data=message_data)
         new_item.save()
-        # print(request.POST['message_data'])
         return HttpResponse()
 
 @csrf_exempt
@@ -40,26 +36,10 @@ def edit_data(request):
         selectedData = json.loads(request.body)
         print(selectedData)
         a = selectedData["pk"]
-
-        # selectedData = int(selectedData)
-        # allData = Message.objects.all()
-        # print(type(selectedData))
-        
-        # all_data 
-
-        # for i in Message.objects.all():
-        #     print(i)
-        #     if i == "Message objects (" + str(selectedData) + ")":
-        #         print("yey")
-        #     else :
-        #         print("brah")    
-
         a1 = Message.objects.get(pk=a)
         print(a1.message_data)
-        # print(a1.date)
         print("batas ngab")
         print(selectedData["message"])
-        # print(selectedData["date"])
         a1.message_data = selectedData["message"]
         a1.save()
         return HttpResponse()

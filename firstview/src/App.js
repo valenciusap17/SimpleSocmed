@@ -2,15 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Axios from "axios";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-// import ReactDOM from 'react-dom/client';
 import "./index.css";
-// import App from './App';
-// // import {name as appName} from './app.json';
-// import reportWebVitals from './reportWebVitals';
-// import { QueryClient, QueryClientProvider } from 'react-query';
-// import {AppRegistry} from 'react-native';
-// import {NavigationContainer} from '@react-navigation/native';
-import moment from "moment";
 import Timelinecard from "./components/Timelinecard";
 
 async function fetchAllData() {
@@ -28,31 +20,22 @@ function FormData() {
 }
 
 export default function Home() {
-  // const [idValue, setIdValue] = useState()
   const { data, isLoading, refetch } = useQuery(["allData"], fetchAllData, {
     manual: true,
   });
   const [message, setMessage] = useState();
-  // const [date, setDate] = useState();
   const urlDataPost = "http://127.0.0.1:8000/post_json/";
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // setShowData("Nyoba ngab " + message + " " + date);
-
     Axios.post(urlDataPost, {
       message_data: message,
     })
       .then(refetch)
       .then(() => setMessage(""));
-    // setDate();
-    // // console.log(dateUse);
-    // setMessage("");
   };
 
   console.log(!isLoading && data.data);
-  // console.log(isLoading);
 
   return (
     <div class="bg-[#0b1a38]">
@@ -61,9 +44,7 @@ export default function Home() {
         <div className="flex justify-center gap-2">
           <form onSubmit={handleSubmit} class="">
             <div class="flex justify-content: space-between">
-              {/* <div class=""> */}
               <textarea
-                // class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                 rows={5}
                 cols={40}
                 id="message"
@@ -72,7 +53,6 @@ export default function Home() {
                 placeholder="Type Your Tweet Here Pal ^-^"
                 onChange={
                   (event) => setMessage(event.target.value)
-                  // setDate(moment().format("YYYY-MM-DD"))
                 }
               />
               <div class="grid grid-rows-2 gap-2 w-30 p-3">
@@ -85,7 +65,6 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-              {/* </div> */}
             </div>
           </form>
         </div>
@@ -112,32 +91,6 @@ export default function Home() {
         </div>
         <br></br>
       </div>
-      {/* <div>{showData}</div> */}
     </div>
   );
 }
-
-// const [showPost, setShowPost] = useState()
-// const apiUrl = 'http://127.0.0.1:8000/json/'
-
-// let displayData
-
-//  function pullData(){
-//   fetch(apiUrl)
-//   .then(response => response.json())
-//   .then(responseData => {
-//     displayData = responseData.map(function(todo) {
-//       return (
-//         <p key={todo.pk}>{todo.fields.message_data}</p>
-//       )
-//     })
-//     console.log(responseData);
-//     setShowPost(displayData);
-
-//   })
-// }
-
-// useEffect(() => {
-//   pullData();
-
-// }, [])
