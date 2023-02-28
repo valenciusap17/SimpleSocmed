@@ -55,33 +55,37 @@ export default function Home() {
   // console.log(isLoading);
 
   return (
-    <>
-    <br></br>
+    <div class="bg-[#0b1a38]">
+      <br></br>
       <div class="flex flex-col space-y-20 mt-10">
-        <div className="flex justify-center">
-          <form onSubmit={handleSubmit} class="w-full max-w-sm">
-            <div class="flex items-center border-b border-teal-500 py-2">
-              <input
-                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                type="text"
+        <div className="flex justify-center gap-2">
+          <form onSubmit={handleSubmit} class="">
+            <div class="flex justify-content: space-between">
+              {/* <div class=""> */}
+              <textarea
+                // class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                rows={5}
+                cols={40}
                 id="message"
-                name="message"
                 value={message}
+                class="block p-2.5 w-full text-sm text-white bg-[#0b1a38] rounded-lg border border-[#2c4370] focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#2c4370] "
                 placeholder="Type Your Tweet Here Pal ^-^"
                 onChange={
                   (event) => setMessage(event.target.value)
                   // setDate(moment().format("YYYY-MM-DD"))
                 }
               />
-
-              <br />
-              <button
-                class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-                type="submit"
-              >
-                Submit
-              </button>
-              <br />
+              <div class="grid grid-rows-2 gap-2 w-30 p-3">
+                <div class="row-start-2 row-end-2">
+                  <button
+                    class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 h-10"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+              {/* </div> */}
             </div>
           </form>
         </div>
@@ -109,7 +113,7 @@ export default function Home() {
         <br></br>
       </div>
       {/* <div>{showData}</div> */}
-    </>
+    </div>
   );
 }
 
